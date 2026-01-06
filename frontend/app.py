@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from datetime import datetime, timedelta
 
-API_BASE = "http://localhost:5000"
+API_BASE = "https://dudu-cookies.vercel.app"
 
 st.title("🍪 Sistema de Controle de Cookies")
 
