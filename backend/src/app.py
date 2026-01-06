@@ -12,16 +12,25 @@ from models.cookie import Cookie
 from models.pedido import Pedido
 
 app = Flask(__name__)
+error_message = None
 
 try:
     dao = DAO()
 except Exception as e:
     print(f"Erro ao conectar com banco: {e}")
+    error_message = str(e)
     dao = None
 
 @app.route('/', methods=['GET'])
 def health_check():
-    return jsonify({'status': 'API funcionando', 'database': 'conectado' if dao else 'erro'})
+    from config import Config
+    config = Config()
+    return jsonify({
+        'status': 'API funcionando', 
+        'database': 'conectado' if dao else 'erro',
+        'error': error_message,
+        'db_url_exists': bool(config.database_url)
+    })
 
 @app.route('/clientes', methods=['POST'])
 def criar_cliente():
